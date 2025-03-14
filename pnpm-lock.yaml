@@ -131,6 +131,9 @@ importers:
       input-otp:
         specifier: ^1.4.2
         version: 1.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      lucide:
+        specifier: ^0.481.0
+        version: 0.481.0
       lucide-react:
         specifier: ^0.481.0
         version: 0.481.0(react@18.3.1)
@@ -2385,6 +2388,9 @@ packages:
     resolution: {integrity: sha512-NrvUDNFwgLIvHiwTEq9boa5Kiz1KdUT8RJ+wmNijwxdn9U737Fw42c43sRxJTMqhL+ySHpGRVCWpwiF+abrEjw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  lucide@0.481.0:
+    resolution: {integrity: sha512-pAZeXt6J+D9aRGGvQmRxzwGVHKyD+/Xta7HnVKWBX+D3jErbGcHbh2Ds2uT1Eke42ONIse9dw6U2ll0PKma+WA==}
 
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -5525,6 +5531,8 @@ snapshots:
   lucide-react@0.481.0(react@18.3.1):
     dependencies:
       react: 18.3.1
+
+  lucide@0.481.0: {}
 
   math-intrinsics@1.1.0: {}
 

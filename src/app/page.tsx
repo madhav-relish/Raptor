@@ -1,4 +1,5 @@
 
+import { Button } from "@/components/ui/button";
 import { auth } from "@/server/auth";
 import { api, HydrateClient } from "@/trpc/server";
 
@@ -12,6 +13,7 @@ export default async function Home() {
   return (
     <HydrateClient>
 <div className="text-5xl">HEllo world</div>
+<Button>Click Me</Button>
     </HydrateClient>
   );
 }
