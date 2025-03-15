@@ -5,6 +5,7 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { SessionProvider } from "next-auth/react";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -19,7 +20,9 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
         <TRPCReactProvider>
-          <SessionProvider>{children}</SessionProvider></TRPCReactProvider>
+          <Toaster richColors/>
+          <SessionProvider>{children}</SessionProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   );

@@ -9,7 +9,29 @@ export const projectRouter = createTRPCRouter({
             githubToken: z.string().optional()
         })
     ).mutation(async ({ctx, input})=>{
-       console.log("input::", input)
-       return
+        const project = await ctx.db.project.create({
+            data:{
+                githubUrl: input.githubUrl,
+                name: input.name,
+                UserToProject:{
+                    create:{
+                        userId: ctx.user.user.id
+                    }
+                }
+            }
+        })
+       return project
+    }),
+    getAllProjects: protectedProcedure.query(async ({ctx})=>{
+        return await ctx.db.project.findMany({
+            where:{
+                UserToProject: {
+                    some:{
+                        userId: ctx.user.user.id
+                    }
+                },
+                deletedAt: null
+            }
+        })
     })
 })

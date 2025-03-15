@@ -13,7 +13,6 @@ import { ZodError } from "zod";
 
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
-import { useSession } from "next-auth/react";
 
 /**
  * 1. CONTEXT
@@ -87,7 +86,7 @@ export const createTRPCRouter = t.router;
  */
 
 const isAuthenticated = t.middleware(async ({next, ctx})=>{
-  const user = await useSession()
+  const user = await auth()
   if(!user){
     throw new TRPCError({
       code: 'UNAUTHORIZED',
