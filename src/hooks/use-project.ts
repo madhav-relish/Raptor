@@ -1,8 +1,16 @@
 import { api } from "@/trpc/react"
+import { useLocalStorage } from 'usehooks-ts'
 
 const useProject =()=>{
     const {data: projects} = api.project.getAllProjects.useQuery()
+    const [projectId, setProjectId] = useLocalStorage('raptor-projectId', '')
+    const project = projects?.find(project =>  project.id === projectId)
     return {
-        projects
+        projects,
+        project,
+        projectId,
+        setProjectId
     }
 }
+
+export default useProject

@@ -13,6 +13,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import useProject from "@/hooks/use-project";
 import { cn } from "@/lib/utils";
 import {
   Bot,
@@ -54,6 +55,7 @@ const items: Array<{
 export function AppSidebar() {
   const pathname = usePathname();
   const { open } = useSidebar();
+  const {projects, projectId, setProjectId} = useProject()
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>Logo</SidebarHeader>
@@ -82,58 +84,30 @@ export function AppSidebar() {
           <SidebarGroupLabel>Your Projects</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              <SidebarMenuItem>
+             {projects?.map(project => {
+              return(
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
-                    <div>
+                  <div onClick={()=>setProjectId(project.id)}>
                       <div
                         className={cn(
                           "flex size-6 items-center justify-center rounded-sm border bg-white text-sm text-primary",
                           {
-                            "bg-primary text-white": true,
+                            "bg-primary text-white": project.id === projectId,
                           },
                         )}
                         // First charcter of the name
                       >
-                        P
+                        {project.name[0]}
                       </div>
-                      <span> Project-1</span>
+                      <span> {project.name}</span>
                     </div>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-              </SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <div>
-                  <div
-                    className={cn(
-                      "flex size-6 items-center justify-center rounded-sm border bg-white text-sm text-primary",
-                      {
-                        "bg-primary text-white": false,
-                      },
-                    )}
-                    // First charcter of the name
-                  >
-                    P
-                  </div>
-                  <span> Project-3</span>
-                </div>
-              </SidebarMenuButton>
-              <SidebarMenuButton asChild>
-                <div>
-                  <div
-                    className={cn(
-                      "flex size-6 items-center justify-center rounded-sm border bg-white text-sm text-primary",
-                      {
-                        "bg-primary text-white": false,
-                      },
-                    )}
-                    // First charcter of the name
-                  >
-                    P
-                  </div>
-                  <span> Project-2</span>
-                </div>
-              </SidebarMenuButton>
+              )
+             })}
+             
+             
               <div className="h-2"></div>
             {open &&  <SidebarMenuItem>
                 <Link href={"/create"}>
