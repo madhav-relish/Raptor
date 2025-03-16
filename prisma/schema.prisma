@@ -3,6 +3,7 @@
 
 generator client {
     provider = "prisma-client-js"
+    previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
@@ -12,6 +13,7 @@ datasource db {
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
     // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url      = env("DATABASE_URL")
+    extensions = [vector]
 }
 
 model Post {
@@ -85,6 +87,7 @@ model Project{
     deletedAt DateTime?
     UserToProject UserToProject[]
     commits Commit[]
+    sourceCodeEmbedding sourceCodeEmbedding[]
 }
 
 model UserToProject {
@@ -117,4 +120,16 @@ model Commit{
     commitDate String
     //ai summary
     summary String
+}
+
+model sourceCodeEmbedding{
+    id String @id @default(cuid())
+
+    summaryEmbedding Unsupported("vector(768)")? //Embedding model that gemini provides
+    sourceCode String
+    fileName String
+    summary String
+
+    projectId String
+    project Project @relation(fields: [projectId], references: [id])
 }
