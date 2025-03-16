@@ -1,5 +1,7 @@
 "use client";
 import useProject from "@/hooks/use-project";
+import { aiSummariesCommit } from "@/lib/gemini";
+import { pollCommits, summariseCommit } from "@/lib/github";
 import { ExternalLink, GithubIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
