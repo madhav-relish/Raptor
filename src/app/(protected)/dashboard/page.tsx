@@ -6,6 +6,7 @@ import { ExternalLink, GithubIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
+import CommitLog from "./commit-log";
 
 const DashboardPage = () => {
   const { data: session } = useSession();
@@ -48,8 +49,8 @@ const DashboardPage = () => {
           MeetingCard
         </div>
         <div className="mt-8"></div>
-        CommitLog
       </div>
+        <CommitLog/>
     </div>
   );
 };

@@ -29,12 +29,10 @@ export const getCommitHashes = async (githubUrl: string): Promise<Response[]> =>
       commitHash: commit.sha as string,
       commitMessage: commit.commit.message ?? "",
       commitAuthorName: commit.commit.author?.name ?? "",
-      commitAuthorAvatar: commit.commit.author?.avatar_url ?? "",
-      commitDate: commit.commit.author.date
+      commitAuthorAvatar: commit.author?.avatar_url ?? "",
+      commitDate: commit.commit.author?.date
    }))
-
 }
-
 
 export const pollCommits = async (projectId: string) => {
    const { project, githubUrl } = await fetchProjectGithubUrl(projectId)
@@ -100,7 +98,5 @@ export async function summariseCommit(githubUrl: string, commitHash: string){
          Accept: 'application/vnd.github.v3.diff' //github's own custom formatting
       }
    })
-
-   console.log("Summaries::", data)
    return await aiSummariesCommit(data) || ""
 }
