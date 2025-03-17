@@ -13,7 +13,7 @@ const google = createGoogleGenerativeAI({
 
 
 export async function askQuestion(question: string, projectId: string) {
-    const stram = createStreamableValue()
+    const stream = createStreamableValue()
 
     const queryVector = await generativeEmbedding(question)
     const vectorQuery = `[${queryVector.join(',')}]`
@@ -49,11 +49,11 @@ AI has the sum of all knowledge in their brain and is able to accurately answer 
 If the question is asking about code or a specific file, AI will provide the detailed answer, giving step-by-step instructions.
 
 START CONTEXT BLOCK
-{context}
+${context}
 END OF CONTEXT BLOCK
 
 START QUESTION
-{question}
+${question}
 END OF QUESTION
 
 AI assistant will take into account any CONTEXT BLOCK that is provided in a conversation.
@@ -67,6 +67,16 @@ AI assistant will not invent anything that is not drawn directly from the contex
 Answer in Markdown syntax, with code snippets if needed. Be as detailed as possible when answering, making sure there is no missing information.
         `
         })
-    })
+        for await (const delta of textStream){
+            
+            stream.update(delta)
+        }
+        stream.done()
+    })()
+
+    return {
+        output: stream.value,
+        filesReferences: result
+    }
 
 }
