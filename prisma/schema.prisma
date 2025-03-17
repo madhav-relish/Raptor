@@ -87,7 +87,7 @@ model Project{
     deletedAt DateTime?
     UserToProject UserToProject[]
     commits Commit[]
-    sourceCodeEmbedding sourceCodeEmbedding[]
+    SourceCodeEmbedding SourceCodeEmbedding[]
 }
 
 model UserToProject {
@@ -122,7 +122,7 @@ model Commit{
     summary String
 }
 
-model sourceCodeEmbedding{
+model SourceCodeEmbedding{
     id String @id @default(cuid())
 
     summaryEmbedding Unsupported("vector(768)")? //Embedding model that gemini provides
