@@ -35,6 +35,16 @@ export async function summariseCode(doc: Document) {
         
         `
     ])
-    const summary = await aiSummariesCommit(doc.pageContent)
+
     return response.response.text()
+}
+
+export async function generativeEmbedding(summary: string){
+    const model = genAI.getGenerativeModel({
+        model: 'text-embedding-004'
+    })
+    const result = await model.embedContent(summary)
+    const embedding = result.embedding
+
+    return embedding.values
 }
