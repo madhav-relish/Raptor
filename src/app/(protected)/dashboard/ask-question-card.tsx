@@ -11,7 +11,7 @@ import useProject from "@/hooks/use-project";
 import React, { useState } from "react";
 import { askQuestion } from "./actions";
 import { readStreamableValue } from "ai/rsc";
-import MDEditor from '@uiw/react-md-editor'
+import MDEditor from "@uiw/react-md-editor";
 import CodeReferences from "./code-references";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
@@ -21,68 +21,77 @@ const AskQuestionCard = () => {
   const { project } = useProject();
   const [question, setQuestion] = useState("");
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false)
-  const [filesReferences, setFileReferences] = useState<{fileName: string; sourceCode: string; summary: string}[]>([])
-  const [answer, setAnswer] = useState("") 
-  const savedAnswers = api.project.savedAnswer.useMutation()
+  const [loading, setLoading] = useState(false);
+  const [filesReferences, setFileReferences] = useState<
+    { fileName: string; sourceCode: string; summary: string }[]
+  >([]);
+  const [answer, setAnswer] = useState("");
+  const savedAnswers = api.project.savedAnswer.useMutation();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    setAnswer('')
-    setFileReferences([])
+    setAnswer("");
+    setFileReferences([]);
     e.preventDefault();
-    if(!project?.id) return
-    setOpen(true)
-    
-    const {output, filesReferences} = await askQuestion(question, project.id)
-    setLoading(true)
-    setFileReferences(filesReferences)
+    if (!project?.id) return;
+    setOpen(true);
 
-    for await (const delta of readStreamableValue(output)){
-      if(delta){
-        setAnswer(ans => ans + delta)
+    const { output, filesReferences } = await askQuestion(question, project.id);
+    setLoading(true);
+    setFileReferences(filesReferences);
+
+    for await (const delta of readStreamableValue(output)) {
+      if (delta) {
+        setAnswer((ans) => ans + delta);
       }
     }
-    setLoading(false)
-
+    setLoading(false);
   };
 
-  const refetch = useRefetch()
+  const refetch = useRefetch();
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[80vw]">
           <DialogHeader>
             <div className="flex items-center gap-2">
-            <DialogTitle>Raptor</DialogTitle>
-            <Button disabled={savedAnswers.isPending} type="button" onClick={()=>{
-             savedAnswers.mutate({
-              projectId: project!.id,
-              question,
-              answer,
-              filesReferences
-             },{
-              onSuccess: ()=>{
-                toast.success('Answer Saved!')
-                refetch()
-              },
-              onError: ()=>{
-                toast.error('Failed to save answer!')
-              }
-             })
-            }
-              }>
-              Save Answer
-            </Button>
+              <DialogTitle>Raptor</DialogTitle>
+              <Button
+                disabled={savedAnswers.isPending}
+                type="button"
+                onClick={() => {
+                  savedAnswers.mutate(
+                    {
+                      projectId: project!.id,
+                      question,
+                      answer,
+                      filesReferences,
+                    },
+                    {
+                      onSuccess: () => {
+                        toast.success("Answer Saved!");
+                        refetch();
+                      },
+                      onError: () => {
+                        toast.error("Failed to save answer!");
+                      },
+                    },
+                  );
+                }}
+              >
+                Save Answer
+              </Button>
             </div>
           </DialogHeader>
-          <MDEditor.Markdown source={answer} 
-          className="max-w-[70vh] !h-full max-h-[40vh] overflow-scroll"/>
-        <CodeReferences filesReferences={filesReferences}/>
-          <Button type="button" onClick={()=>setOpen(false)}>
+          <MDEditor.Markdown
+            source={answer}
+            className="!h-full max-h-[40vh] overflow-y-auto px-4 py-2 prose prose-sm dark:prose-invert"
+          />
+          <CodeReferences filesReferences={filesReferences} />
+          <Button type="button" onClick={() => setOpen(false)}>
             Close
           </Button>
-          {filesReferences.map(file => {
-            return <span>{file.fileName}</span>
+          {filesReferences.map((file) => {
+            return <span>{file.fileName}</span>;
           })}
         </DialogContent>
       </Dialog>
@@ -98,7 +107,9 @@ const AskQuestionCard = () => {
               className="which file should I wdit to change the home page?"
             />
             <div className="h-4"></div>
-            <Button type="submit" disabled={loading}>Ask Raptor!</Button>
+            <Button type="submit" disabled={loading}>
+              Ask Raptor!
+            </Button>
           </form>
         </CardContent>
       </Card>

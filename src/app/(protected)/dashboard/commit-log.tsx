@@ -2,6 +2,7 @@
 import useProject from "@/hooks/use-project";
 import { cn } from "@/lib/utils";
 import { api } from "@/trpc/react";
+import MDEditor from "@uiw/react-md-editor";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -48,7 +49,9 @@ const CommitLog = () => {
                     {commit.commitMessage}
                   </span>
                   <pre className="mt-2 whitespace-pre-wrap text-sm leading-6 text-gray-500">
-                    {commit.summary}
+                    <MDEditor.Markdown source={commit.summary}/>
+
+                   
                   </pre>
                   </div>
                 </>

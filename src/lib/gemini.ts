@@ -5,7 +5,7 @@ console.log('API KEY::', process.env.GEMINI_API_KEY)
 
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 
 export const aiSummariesCommit = async (diff: string) => {
@@ -45,6 +45,6 @@ export async function generativeEmbedding(summary: string){
     })
     const result = await model.embedContent(summary)
     const embedding = result.embedding
-
+    console.log("Embedding Generative::", embedding.values)
     return embedding.values
 }
