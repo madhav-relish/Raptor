@@ -67,6 +67,7 @@ model User {
     sessions      Session[]
     posts         Post[]
     UserToProject UserToProject[]
+    questionsAsked Question[]
 }
 
 model VerificationToken {
@@ -87,10 +88,11 @@ model Project{
     deletedAt DateTime?
     UserToProject UserToProject[]
     commits Commit[]
-    SourceCodeEmbedding SourceCodeEmbedding[]
+    SourceCodeEmbeddings SourceCodeEmbedding[]
+    savedQuestions Question[]
 }
 
-model UserToProject {
+  model UserToProject {
     id String @id @default(uuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -132,4 +134,22 @@ model SourceCodeEmbedding{
 
     projectId String
     project Project @relation(fields: [projectId], references: [id])
+}
+
+model Question{
+    id String @id @default(uuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    question String
+    answer String
+
+    filesReference Json?
+
+    projectId String
+    Project Project @relation(fields: [projectId], references: [id])
+    
+    userId String
+    user User @relation(fields: [userId], references: [id])
+
 }

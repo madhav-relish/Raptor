@@ -7,6 +7,7 @@ import { generativeEmbedding } from '@/lib/gemini'
 import { db } from '@/server/db'
 
 
+
 const google = createGoogleGenerativeAI({
     apiKey: process.env.GEMINI_API_KEY
 })
