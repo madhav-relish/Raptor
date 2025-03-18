@@ -19,7 +19,7 @@ export const projectRouter = createTRPCRouter({
           name: input.name,
           UserToProject: {
             create: {
-              userId: ctx.user.user.id,
+              userId: ctx.session.user.id,
             },
           },
         },
@@ -33,7 +33,7 @@ export const projectRouter = createTRPCRouter({
       where: {
         UserToProject: {
           some: {
-            userId: ctx.user.user.id,
+            userId: ctx.session.user.id,
           },
         },
         deletedAt: null,
@@ -70,7 +70,7 @@ export const projectRouter = createTRPCRouter({
           filesReference: input.filesReferences,
           question: input.question,
           projectId: input.projectId,
-          userId: ctx.user.user.id,
+          userId: ctx.session.user.id,
         },
       });
     }),

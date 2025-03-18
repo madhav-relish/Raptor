@@ -1,7 +1,5 @@
 "use client";
 import useProject from "@/hooks/use-project";
-import { aiSummariesCommit } from "@/lib/gemini";
-import { pollCommits, summariseCommit } from "@/lib/github";
 import { ExternalLink, GithubIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -10,18 +8,22 @@ import CommitLog from "./commit-log";
 import AskQuestionCard from "./ask-question-card";
 import MeetingCard from "./meeting-card";
 import ArchiveButton from "./archive-button";
+import InviteButton from "./invite-button";
 
 const DashboardPage = () => {
   const { data: session } = useSession();
   const { project, projectId } = useProject();
 
-
   if (!session) {
     return <div>Loading...</div>;
   }
 
-  if(!projectId || projectId===""){
-   return <div className="h-[50vh] text-lg font-semibold flex justify-center items-center">Select a project from the Sidemenu or Click on Create Project!</div>
+  if (!projectId || projectId === "") {
+    return (
+      <div className="flex h-[50vh] items-center justify-center text-lg font-semibold">
+        Select a project from the Sidemenu or Click on Create Project!
+      </div>
+    );
   }
 
   return (
@@ -38,6 +40,7 @@ const DashboardPage = () => {
                   target="_blank"
                   className="inline-flex items-center text-white/80 hover:underline"
                 >
+                  
                   {project?.githubUrl}
                   <ExternalLink className="ml-1 size-4" />
                 </Link>
@@ -48,7 +51,8 @@ const DashboardPage = () => {
 
         <div className="h-4"></div>
         <div className="flex items-center gap-4">
-          Team Members Invite Button
+          Team Members 
+          <InviteButton/>
           <ArchiveButton />
         </div>
       </div>

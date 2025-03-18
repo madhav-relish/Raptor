@@ -49,9 +49,8 @@ const CommitLog = () => {
                     {commit.commitMessage}
                   </span>
                   <pre className="mt-2 whitespace-pre-wrap text-sm leading-6 text-gray-500">
-                    <MDEditor.Markdown source={commit.summary}/>
-
-                   
+                    <MDEditor.Markdown className="!bg-background !text-primary max-h-96 !overflow-auto" source={commit.summary}/>
+                    {/* {commit.summary} */}
                   </pre>
                   </div>
                 </>
