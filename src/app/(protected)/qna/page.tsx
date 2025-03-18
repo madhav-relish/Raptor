@@ -7,10 +7,13 @@ import AskQuestionCard from "../dashboard/ask-question-card";
 import MDEditor from "@uiw/react-md-editor";
 import CodeReferences from "../dashboard/code-references";
 import { ExpandableCard } from "@/components/ui/expandable-card";
+import { useTheme } from "next-themes"
+import rehypeSanitize from "rehype-sanitize"
 
 const QnAPage = () => {
   const { projectId } = useProject();
   const { data: questions } = api.project.getQuestions.useQuery({ projectId });
+  const { theme } = useTheme()
 
   const renderQuestion = (question: any, id: string) => (
     <motion.div
@@ -72,9 +75,17 @@ const QnAPage = () => {
     </motion.h3>
     <div className=" h-[40vh] overflow-y-scroll">
 
-      <MDEditor.Markdown 
-        className="!bg-background !text-primary !overflow-auto !prose" 
-        source={question.answer} 
+    <MDEditor.Markdown
+          className="!bg-transparent !text-primary !overflow-auto !prose dark:!prose-invert"
+          source={question.answer}
+          rehypePlugins={[[rehypeSanitize]]}
+          components={{
+            code: ({children, ...props}) => (
+              <code {...props} className="!bg-neutral-100 dark:!bg-neutral-800 !text-primary">
+                {children}
+              </code>
+            )
+          }}
         />
         </div>
         <div className="h-4"></div>

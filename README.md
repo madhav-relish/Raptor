@@ -1,29 +1,74 @@
-# Create T3 App
+# Raptor.ai - AI-Powered Code Intelligence Platform
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+![Raptor.ai](public/favicon.ico)
 
-## What's next? How do I make an app with this?
+Raptor.ai is an intelligent code analysis and Q&A platform that helps developers understand and navigate their codebase more effectively.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Features
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- 🤖 **AI-Powered Q&A**: Ask questions about your codebase in natural language
+- 📚 **Code Context**: Get detailed explanations with code references
+- 🤝 **Team Collaboration**: Share project knowledge seamlessly
+- 🔄 **GitHub Integration**: Connect directly with your repositories
+- 📊 **Meeting Summaries**: (Coming Soon) Get AI-generated summaries of your development meetings
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Tech Stack
 
-## Learn More
+- **Frontend**: Next.js 14, React, TypeScript, Tailwind CSS
+- **UI Components**: Radix UI, Framer Motion
+- **Authentication**: NextAuth.js
+- **API**: tRPC
+- **Database**: Prisma
+- **AI**: Gemini Pro
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Getting Started
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/raptor.git
+```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+2. Install dependencies:
+```bash
+npm install
+```
 
-## How do I deploy this?
+3. Set up environment variables:
+```bash
+cp .env.example .env
+```
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+4. Run the development server:
+```bash
+npm run dev
+```
+
+## How It Works
+
+1. Connect your GitHub repository
+2. Raptor analyzes your codebase
+3. Ask questions in natural language
+4. Get instant answers with relevant code references
+
+## Pricing
+
+- Pay-as-you-go model
+- Credits system for file indexing
+- 1 credit = 1 file indexed
+- Flexible pricing starting at $0.02 per credit
+
+## Contributing
+
+We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+For support, email support@raptor.ai or open an issue in this repository.
+
+---
+
+Built with ❤️ by the Raptor.ai Team
