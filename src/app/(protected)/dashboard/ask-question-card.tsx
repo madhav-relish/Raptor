@@ -16,6 +16,7 @@ import CodeReferences from "./code-references";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
 import useRefetch from "@/hooks/use-refetch";
+import { Save } from "lucide-react";
 
 const AskQuestionCard = () => {
   const { project } = useProject();
@@ -35,8 +36,8 @@ const AskQuestionCard = () => {
     if (!project?.id) return;
     setOpen(true);
 
-    const { output, filesReferences } = await askQuestion(question, project.id);
     setLoading(true);
+    const { output, filesReferences } = await askQuestion(question, project.id);
     setFileReferences(filesReferences);
 
     for await (const delta of readStreamableValue(output)) {
@@ -55,7 +56,17 @@ const AskQuestionCard = () => {
           <DialogHeader>
             <div className="flex items-center gap-2">
               <DialogTitle>Raptor</DialogTitle>
-              <Button
+             
+            </div>
+          </DialogHeader>
+          <MDEditor.Markdown
+            source={answer}
+            className="!h-full max-h-[40vh] !overflow-auto px-4 py-2 prose prose-sm dark:prose-invert"
+          />
+          <CodeReferences filesReferences={filesReferences} />
+        <div className="flex gap-2 items-center justify-end">
+        <Button
+
                 disabled={savedAnswers.isPending}
                 type="button"
                 onClick={() => {
@@ -78,18 +89,12 @@ const AskQuestionCard = () => {
                   );
                 }}
               >
-                Save Answer
+             <Save className="size-4"/>   Save Answer
               </Button>
-            </div>
-          </DialogHeader>
-          <MDEditor.Markdown
-            source={answer}
-            className="!h-full max-h-[40vh] !overflow-auto px-4 py-2 prose prose-sm dark:prose-invert"
-          />
-          <CodeReferences filesReferences={filesReferences} />
           <Button type="button" onClick={() => setOpen(false)}>
             Close
           </Button>
+        </div>
         </DialogContent>
       </Dialog>
       <Card className="relative col-span-3">
