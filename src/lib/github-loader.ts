@@ -6,11 +6,12 @@ import { db } from "@/server/db";
 import { Octokit } from "octokit";
 
 const getFileCount = async(path: string, octokit: Octokit, githubOwner: string, githubRepo: string, acc: number = 0)=>{
-    const {data } = await octokit.rest.repos.getContent({
-        owner: githubRepo,
+    const { data } = await octokit.rest.repos.getContent({
+        owner: githubOwner,
         repo: githubRepo,
         path
     })
+
     if(!Array.isArray(data) && data.type === 'file'){
         return acc + 1
     }
@@ -38,7 +39,7 @@ const getFileCount = async(path: string, octokit: Octokit, githubOwner: string, 
 
 export const checkCredits = async (githubUrl: string, githubToken?: string)=>{
     // check total number of files in a repo
-    const octoKit = new Octokit({auth: githubToken})
+    const octoKit = new Octokit({auth: githubToken || process.env.GITHUB_TOKEN})
     const githubOwner = githubUrl.split('/')[3]
     const githubRepo = githubUrl.split('/')[4]
 
