@@ -68,6 +68,7 @@ model User {
     posts         Post[]
     UserToProject UserToProject[]
     questionsAsked Question[]
+    creditTransactions CreditsTransaction[]
 }
 
 model VerificationToken {
@@ -152,4 +153,14 @@ model Question{
     userId String
     user User @relation(fields: [userId], references: [id])
 
+}
+
+model CreditsTransaction {
+     id String @id @default(uuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    userId String
+    user User @relation(fields: [userId], references: [id])
+    credits Int
 }
