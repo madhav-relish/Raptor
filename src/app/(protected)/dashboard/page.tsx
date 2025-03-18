@@ -9,6 +9,7 @@ import React from "react";
 import CommitLog from "./commit-log";
 import AskQuestionCard from "./ask-question-card";
 import MeetingCard from "./meeting-card";
+import ArchiveButton from "./archive-button";
 
 const DashboardPage = () => {
   const { data: session } = useSession();
@@ -42,7 +43,8 @@ const DashboardPage = () => {
 
         <div className="h-4"></div>
         <div className="flex items-center gap-4">
-          Team Members Invite Button Active Button
+          Team Members Invite Button 
+         <ArchiveButton/>
         </div>
       </div>
       <div className="mt-4">
