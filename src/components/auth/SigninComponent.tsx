@@ -17,6 +17,11 @@ const SigninComponent = () => {
   return (
     <Card>
       <CardContent className="flex flex-col items-center gap-2 p-2">
+        {/* <Button onClick={()=>signIn("discord")} variant={"ghost"}>
+          {" "}Zz
+          <Icons.discord color="blue" /> Signin with Discord{" "}
+        </Button> */}
+
         <Button onClick={()=>signIn("github")} variant={"ghost"}>
           {" "}
           <GithubIcon size={40}/> Signin with Github{" "}
