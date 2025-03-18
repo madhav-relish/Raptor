@@ -1,31 +1,25 @@
 "use client";
 
 import React from "react";
-import Icons from "@/components/Icons";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { GithubIcon } from "lucide-react";
+import { redirect, useRouter } from "next/navigation";
 
 
 const SigninComponent = () => {
-  const handleSignin = async () => {
-    try {
-      await signIn("discord");
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const session = useSession()
+  const router = useRouter()
+
+  if(session && session.status==="authenticated"){return router.push('/dashboard')}
+
   return (
     <Card>
-      <CardContent className="flex items-center gap-2 p-2">
-        <Button onClick={handleSignin} variant={"ghost"}>
-          {" "}
-          <Icons.discord color="blue" /> Signin with Discord{" "}
-        </Button>
-        <br/>
+      <CardContent className="flex flex-col items-center gap-2 p-2">
         <Button onClick={()=>signIn("github")} variant={"ghost"}>
           {" "}
-          <Icons.discord color="blue" /> Signin with Github{" "}
+          <GithubIcon size={40}/> Signin with Github{" "}
         </Button>
       </CardContent>
     </Card>
