@@ -22,6 +22,7 @@ import {
   LucideIcon,
   Plus,
   Presentation,
+  RocketIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -58,7 +59,13 @@ export function AppSidebar() {
   const {projects, projectId, setProjectId} = useProject()
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader>Logo</SidebarHeader>
+<SidebarHeader className="font-bold text-4xl flex flex-row items-center gap-2">
+  <RocketIcon className="w-8 h-8 text-blue-400" /> 
+  <span className="bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
+    {open ? "Raptor.ai" : "R"}
+  </span>
+</SidebarHeader>
+
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
