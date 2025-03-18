@@ -7,52 +7,66 @@ import { Tabs } from "../ui/animated-tabs";
 export function TabsDemo() {
   const tabs = [
     {
-      title: "Product",
-      value: "product",
+      title: "Smart Q&A",
+      value: "qna",
       content: (
         <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
-          <p>Product Tab</p>
-          <DummyContent />
+          <p>Saved Answers on the Go or Ask again!</p>
+          <Image
+      src="/qna.png"
+      alt="dummy image"
+      width="1000"
+      height="1000"
+      className="object-cover object-left-top h-[60%]  md:h-[90%] absolute -bottom-10 inset-x-0 w-[90%] rounded-xl mx-auto"
+    />
         </div>
       ),
     },
     {
-      title: "Services",
-      value: "services",
+      title: "Code Context",
+      value: "code_context",
       content: (
         <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
-          <p>Services tab</p>
-          <DummyContent />
+          <p>Raptor Understands the context of you codebase!</p>
+          <Image
+      src="/aichat.png"
+      alt="dummy image"
+      width="1000"
+      height="1000"
+      className="object-cover object-left-top h-[60%]  md:h-[90%] absolute -bottom-10 inset-x-0 w-[90%] rounded-xl mx-auto"
+    />
         </div>
       ),
     },
     {
-      title: "Playground",
-      value: "playground",
+      title: "Team Collaboration",
+      value: "team_collaboration",
       content: (
         <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
-          <p>Playground tab</p>
-          <DummyContent />
+          <p>Invite Junior Devs to get them started straight away!</p>
+          <Image
+      src="/Invite.png"
+      alt="dummy image"
+      width="1000"
+      height="1000"
+      className="object-cover object-left-top h-[60%]  md:h-[90%] absolute -bottom-10 inset-x-0 w-[90%] rounded-xl mx-auto"
+    />
         </div>
       ),
     },
     {
-      title: "Content",
-      value: "content",
+      title: "Commit History",
+      value: "commit_history",
       content: (
         <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
-          <p>Content tab</p>
-          <DummyContent />
-        </div>
-      ),
-    },
-    {
-      title: "Random",
-      value: "random",
-      content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
-          <p>Random tab</p>
-          <DummyContent />
+          <p>All Your Commit History at One Place</p>
+          <Image
+      src="/commits.png"
+      alt="dummy image"
+      width="1000"
+      height="1000"
+      className="object-cover object-left-top h-[60%]  md:h-[90%] absolute -bottom-10 inset-x-0 w-[90%] rounded-xl mx-auto"
+    />
         </div>
       ),
     },

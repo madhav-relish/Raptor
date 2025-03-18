@@ -52,7 +52,7 @@ const QnAPage = () => {
   const renderExpandedQuestion = (question: any, id: string) => (
     <motion.div
       layoutId={`card-${question.id}-${id}`}
-      className="w-full max-w-[80vw] h-full md:h-fit md:max-h-[90%] flex flex-col bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-hidden p-6"
+      className="w-full max-w-[80vw] h-full md:h-fit md:max-h-[80vh] flex flex-col bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-auto p-6"
     >
        <motion.h3
       layoutId={`title-${question.id}-${id}`}
@@ -70,11 +70,16 @@ const QnAPage = () => {
       </motion.div>
       {question.question}
     </motion.h3>
+    <div className=" h-[40vh] overflow-y-scroll">
+
       <MDEditor.Markdown 
-        className="!bg-background !text-primary !overflow-auto" 
+        className="!bg-background !text-primary !overflow-auto !prose" 
         source={question.answer} 
-      />
+        />
+        </div>
+        <div className="h-4"></div>
       <CodeReferences
+      height="40vh"
         filesReferences={question.filesReference as any[]}
       />
     </motion.div>

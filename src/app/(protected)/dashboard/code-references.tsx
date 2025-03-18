@@ -8,14 +8,15 @@ import { lucario } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 type Props = {
   filesReferences: { fileName: string; sourceCode: string; summary: string }[];
+  height?: string
 };
 
-const CodeReferences = ({ filesReferences }: Props) => {
+const CodeReferences = ({ filesReferences, height }: Props) => {
   const [tab, setTab] = useState(filesReferences[0]?.fileName);
   return (
-    <div className="max-w-[70vw]">
+    <div className={cn(height ? `h-[${height}]` : 'max-h-[70vh]')}>
       <Tabs value={tab} onValueChange={setTab}>
-        <div className="flex gap-2 overflow-auto rounded-md bg-gray-200 p-1">
+        <div className="flex gap-2 overflow-y-scroll w-full max-w-[75vw] rounded-md bg-gray-200 p-1">
           {filesReferences.map((file) => (
             <button
             onClick={()=>setTab(file.fileName)}

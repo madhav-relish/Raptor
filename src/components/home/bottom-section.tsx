@@ -1,4 +1,5 @@
 import { SparklesCore } from "../ui/sparkles";
+import MagicButton from "./MagicButton";
 
 const BottomSection = () => {
   const currentYear = new Date().getFullYear();
@@ -27,6 +28,7 @@ const BottomSection = () => {
           </p>
         </div>
         {/* <CTAButtons /> */}
+        <MagicButton/>
       </div>
 
       <div className="absolute bottom-4 w-full flex justify-center items-center">

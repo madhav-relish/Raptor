@@ -1,4 +1,5 @@
 import BottomSection from "@/components/home/bottom-section";
+import MagicButton from "@/components/home/MagicButton";
 import { TabsDemo } from "@/components/home/tabs-demo";
 import { BackgroundLines } from "@/components/ui/background-lines";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
@@ -30,6 +31,9 @@ export default async function Home() {
         <p className="mt-4 font-normal text-xl text-neutral-300 max-w-lg text-center mx-auto">
         Ask questions about your codebase, get instant answers, and make development collaboration smarter.
         </p>
+        <div className="w-full flex items-center justify-center mt-8">
+        <MagicButton/>
+        </div>
       </div>
     </div>
           </div>
@@ -58,7 +62,7 @@ export default async function Home() {
           }
         >
           <Image
-            src={`/image.png`}
+            src={`/full_app.png`}
             alt="hero"
             height={720}
             width={1400}
