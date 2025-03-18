@@ -18,15 +18,16 @@ const QnAPage = () => {
       className="p-4 flex flex-col   md:flex-row justify-between items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer"
     >
       <div className="flex gap-4 flex-col md:flex-row md:items-center md:flex-1">
-        <motion.div className="w-14 h-14" layoutId={`image-${question.id}-${id}`}>
-          <img
-            className="h-14 w-14 rounded-full"
-            height={30}
-            width={30}
-            src={question.user.image ?? ""}
-            alt="User avatar"
-          />
-        </motion.div>
+      <motion.div layoutId={`image-container-${question.id}-${id}`} className="w-14 h-14">
+        <motion.img
+          layoutId={`image-${question.id}-${id}`}
+          className="h-14 w-14 rounded-full"
+          height={30}
+          width={30}
+          src={question.user.image ?? ""}
+          alt="User avatar"
+        />
+      </motion.div>
         <div className="w-full">
           <motion.h3
             layoutId={`title-${question.id}-${id}`}
@@ -53,12 +54,22 @@ const QnAPage = () => {
       layoutId={`card-${question.id}-${id}`}
       className="w-full max-w-[80vw] h-full md:h-fit md:max-h-[90%] flex flex-col bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-hidden p-6"
     >
-      <motion.h3
-        layoutId={`title-${question.id}-${id}`}
-        className="text-2xl font-bold mb-4"
-      >
-        {question.question}
-      </motion.h3>
+       <motion.h3
+      layoutId={`title-${question.id}-${id}`}
+      className="text-2xl font-bold mb-4 flex items-center gap-2"
+    >
+      <motion.div layoutId={`image-container-${question.id}-${id}`} className="w-14 h-14">
+        <motion.img
+          layoutId={`image-${question.id}-${id}`}
+          className="h-14 w-14 rounded-full"
+          height={30}
+          width={30}
+          src={question.user.image ?? ""}
+          alt="User avatar"
+        />
+      </motion.div>
+      {question.question}
+    </motion.h3>
       <MDEditor.Markdown 
         className="!bg-background !text-primary !overflow-auto" 
         source={question.answer} 
