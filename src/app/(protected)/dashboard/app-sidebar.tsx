@@ -60,8 +60,8 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
 <SidebarHeader className="font-bold text-4xl flex flex-row items-center gap-2">
-  <RocketIcon className="w-8 h-8 text-blue-400" /> 
-  <span className="bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
+  <RocketIcon className="w-8 h-8 text-black" /> 
+  <span className="bg-gradient-to-r from-gray-300 to-black text-transparent bg-clip-text">
     {open ? "Raptor.ai" : "R"}
   </span>
 </SidebarHeader>

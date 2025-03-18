@@ -19,17 +19,20 @@ const BillingPage = () => {
       <div className="h-2"></div>
       <p>You currently have {user?.credits} Raptor credits</p>
       <div className="h-2"></div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 p-2 bg-blue-50 border border-blue-200 text-primary rounded-lg">
+        <div className="flex flex-col">
+
+        <p className="text-sm flex gap-2 items-center">
         <Info className="size-4" />
-        <p className="text-sm">
           Each credit allows you to index 1 file in a repository
         </p>
-      </div>
       <p className="text-sm">
         {" "}
         E.g. If your project has 100 files, you will need 100 credits to index
         it
       </p>
+      </div>
+        </div>
       <div className="h-4"></div>
       <Slider
         defaultValue={[100]}
