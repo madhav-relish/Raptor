@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import useRefetch from "@/hooks/use-refetch";
 import { createCheckoutSession } from "@/lib/stripe";
 import { api } from "@/trpc/react";
 import { Info } from "lucide-react";
@@ -11,6 +12,7 @@ const BillingPage = () => {
   const [creditsToBuy, setCreditsToBuy] = useState<number[]>([100]);
   const creditsToButAmount = creditsToBuy[0]!;
   const price = (creditsToButAmount / 50).toFixed(2);
+  const refetch = useRefetch()
   return (
     <div>
       <h1>Billing</h1>
@@ -37,7 +39,9 @@ const BillingPage = () => {
         value={creditsToBuy}
       />
       <div className="h-4"></div>
-      <Button onClick={() => createCheckoutSession(creditsToButAmount)}>
+      <Button onClick={() => {createCheckoutSession(creditsToButAmount)
+        refetch()
+      }}>
         Buy {creditsToBuy} credits for ${price}
       </Button>
     </div>
