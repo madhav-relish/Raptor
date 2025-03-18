@@ -6,7 +6,7 @@ import React from 'react'
 import { toast } from 'sonner'
 
 const ArchiveButton = () => {
-    const {projectId} = useProject()
+    const {projectId, setProjectId} = useProject()
 
     const archiveProject = api.project.archiveProject.useMutation()
     const refetch = useRefetch()
@@ -17,6 +17,7 @@ const ArchiveButton = () => {
         onSuccess: ()=>{
             toast.success("Project Archived!")
             refetch()
+            setProjectId("")
         }, onError: ()=>{
             toast.error("Unable to archive project")
         }

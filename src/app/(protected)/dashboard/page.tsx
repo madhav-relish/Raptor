@@ -13,10 +13,15 @@ import ArchiveButton from "./archive-button";
 
 const DashboardPage = () => {
   const { data: session } = useSession();
-  const { project } = useProject();
+  const { project, projectId } = useProject();
+
 
   if (!session) {
     return <div>Loading...</div>;
+  }
+
+  if(!projectId || projectId===""){
+   return <div className="h-[50vh] text-lg font-semibold flex justify-center items-center">Select a project from the Sidemenu or Click on Create Project!</div>
   }
 
   return (
@@ -43,18 +48,18 @@ const DashboardPage = () => {
 
         <div className="h-4"></div>
         <div className="flex items-center gap-4">
-          Team Members Invite Button 
-         <ArchiveButton/>
+          Team Members Invite Button
+          <ArchiveButton />
         </div>
       </div>
       <div className="mt-4">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
-          <AskQuestionCard/>
-          <MeetingCard/>
+          <AskQuestionCard />
+          <MeetingCard />
         </div>
         <div className="mt-8"></div>
       </div>
-        <CommitLog/>
+      <CommitLog />
     </div>
   );
 };
