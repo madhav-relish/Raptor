@@ -51,7 +51,7 @@ const AskQuestionCard = () => {
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[80vw]">
+        <DialogContent className="sm:max-w-[80vw] max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <div className="flex items-center gap-2">
               <DialogTitle>Raptor</DialogTitle>
@@ -84,15 +84,12 @@ const AskQuestionCard = () => {
           </DialogHeader>
           <MDEditor.Markdown
             source={answer}
-            className="!h-full max-h-[40vh] overflow-y-auto px-4 py-2 prose prose-sm dark:prose-invert"
+            className="!h-full max-h-[40vh] !overflow-auto px-4 py-2 prose prose-sm dark:prose-invert"
           />
           <CodeReferences filesReferences={filesReferences} />
           <Button type="button" onClick={() => setOpen(false)}>
             Close
           </Button>
-          {filesReferences.map((file) => {
-            return <span>{file.fileName}</span>;
-          })}
         </DialogContent>
       </Dialog>
       <Card className="relative col-span-3">

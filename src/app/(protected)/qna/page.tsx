@@ -60,7 +60,7 @@ const QnAPage = () => {
         <SheetContent className="sm:max-w-[80vw]">
           <SheetHeader>
             <SheetTitle>{question.question}</SheetTitle>
-            <MDEditor.Markdown source={question.answer} />
+            <MDEditor.Markdown className="!bg-background !text-primary !overflow-auto" source={question.answer} />
             <CodeReferences
               filesReferences={question.filesReference as any[]}
             />

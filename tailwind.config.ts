@@ -93,5 +93,31 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [ require("tailwindcss-animate"),
+    function({ addBase }: any) {
+      addBase({
+        '*': {
+          '&::-webkit-scrollbar': {
+            width: '8px',
+			height: '8px'
+          },
+          '&::-webkit-scrollbar-track': {
+            borderRadius: '9999px',
+            backgroundColor: 'rgb(243 244 246)',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            borderRadius: '9999px',
+            backgroundColor: 'rgb(209 213 219)',
+          },
+        },
+        '.dark *': {
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: 'rgb(64 64 64)',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'rgb(115 115 115)',
+          },
+        },
+      });
+    },],
 } satisfies Config;

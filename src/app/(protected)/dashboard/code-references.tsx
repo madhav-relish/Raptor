@@ -15,7 +15,7 @@ const CodeReferences = ({ filesReferences }: Props) => {
   return (
     <div className="max-w-[70vw]">
       <Tabs value={tab} onValueChange={setTab}>
-        <div className="flex gap-2 overflow-scroll rounded-md bg-gray-200 p-1">
+        <div className="flex gap-2 overflow-auto rounded-md bg-gray-200 p-1">
           {filesReferences.map((file) => (
             <button
             onClick={()=>setTab(file.fileName)}
@@ -35,7 +35,7 @@ const CodeReferences = ({ filesReferences }: Props) => {
           <TabsContent
             key={file.fileName}
             value={file.fileName}
-            className="max-h-[40h] max-w-7xl overflow-scroll rounded-md"
+            className="max-h-[40vh] max-w-8xl overflow-auto rounded-md"
           >
             <SyntaxHighlighter language="typescript" style={lucario}>
               {file.sourceCode}
