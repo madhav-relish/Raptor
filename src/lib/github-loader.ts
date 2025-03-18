@@ -8,7 +8,7 @@ import { db } from "@/server/db";
 export const loadGithubRepo = async (githubUrl: string, githubToken?: string) => {
     const loader = new GithubRepoLoader(githubUrl,
         {
-            accessToken: githubToken || "",
+            accessToken: githubToken || process.env.GITHUB_TOKEN,
             branch: 'main',
             ignoreFiles: ['package-lock.json', 'yarn.lock', 'pnpm-lock.yml', 'bun.lockb'],
             recursive: true,

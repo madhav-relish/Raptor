@@ -39,12 +39,12 @@ export async function summariseCode(doc: Document) {
     return response.response.text()
 }
 
-export async function generativeEmbedding(summary: string){
+export async function generativeEmbedding(summary: string) {
     const model = genAI.getGenerativeModel({
         model: 'text-embedding-004'
     })
     const result = await model.embedContent(summary)
     const embedding = result.embedding
-    console.log("Embedding Generative::", embedding.values)
+    // console.log("Embedding Generative::", embedding.values)
     return embedding.values
 }

@@ -22,6 +22,7 @@ const SigninComponent = () => {
           {" "}
           <Icons.discord color="blue" /> Signin with Discord{" "}
         </Button>
+        <br/>
         <Button onClick={()=>signIn("github")} variant={"ghost"}>
           {" "}
           <Icons.discord color="blue" /> Signin with Github{" "}
