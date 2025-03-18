@@ -6,6 +6,7 @@ import { type Metadata } from "next";
 import { TRPCReactProvider } from "@/trpc/react";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -21,7 +22,11 @@ export default function RootLayout({
       <body>
         <TRPCReactProvider>
           <Toaster richColors />
-          <SessionProvider>{children}</SessionProvider>
+          <SessionProvider>
+            <TooltipProvider>
+            {children}
+            </TooltipProvider>
+            </SessionProvider>
         </TRPCReactProvider>
       </body>
     </html>
