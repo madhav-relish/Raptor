@@ -56,11 +56,11 @@ const CreatePage = () => {
       <div>
         <div>
           <h1>Link your github repository</h1>
-          <p>Enter the url to link you repository</p>
+          <p>Enter the url to link your repository</p>
         </div>
         <div className="h-4">
           <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
               <Input
                 {...register("projectName", { required: true })}
                 required
@@ -88,13 +88,16 @@ const CreatePage = () => {
                     <p className="text-sm text-blue-600 ml-6">
                   You have <strong>{checkCredits.data?.userCredits}</strong> credits remaining
                     </p>
+                   {checkCredits.data?.fileCount == 0 && <p className="text-sm text-blue-600 ml-6">
+                  Make sure your repository exists and has some files!
+                    </p>}
                 </div>
                 
                 </>
               )}
               <div className="h-4"></div>
 
-              <Button type="submit" disabled={createProject.isPending || !!checkCredits.isPending || !hasEnoughCredits}>
+              <Button type="submit" disabled={createProject.isPending || !!checkCredits.isPending || !hasEnoughCredits || checkCredits.data?.fileCount == 0}>
              {!!checkCredits.data ? "Create Project" : "Check Credits"}
               </Button>
             </form>
