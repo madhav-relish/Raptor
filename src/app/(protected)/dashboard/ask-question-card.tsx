@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -17,6 +18,7 @@ import { api } from "@/trpc/react";
 import { toast } from "sonner";
 import useRefetch from "@/hooks/use-refetch";
 import { Save } from "lucide-react";
+import rehypeSanitize from "rehype-sanitize";
 
 const AskQuestionCard = () => {
   const { project } = useProject();
@@ -52,49 +54,64 @@ const AskQuestionCard = () => {
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[80vw] max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
+        <DialogContent className="sm:max-w-[90vw] h-[90vh] flex flex-col overflow-hidden">
+          <DialogHeader className="flex-shrink-0">
             <div className="flex items-center gap-2">
               <DialogTitle>Raptor</DialogTitle>
-             
             </div>
           </DialogHeader>
-          <MDEditor.Markdown
-            source={answer}
-            className="!h-full max-h-[40vh] !overflow-auto px-4 py-2 prose prose-sm dark:prose-invert"
-          />
-          <CodeReferences filesReferences={filesReferences} />
-        <div className="flex gap-2 items-center justify-end">
-        <Button
+          
+          <div className="flex-1 overflow-hidden flex flex-col gap-4">
+            <div className="flex-1 overflow-auto min-h-0">
+              <MDEditor.Markdown
+                source={answer}
+                className="p-2 rounded"
+                // rehypePlugins={[[rehypeSanitize]]}
+                          components={{
+                            code: ({children, ...props}) => (
+                              <code {...props} className="!bg-neutral-100 dark:!bg-neutral-800 !text-primary">
+                                {children}
+                              </code>
+                            )
+                          }}
+              />
+            </div>
+            
+           
+              <CodeReferences filesReferences={filesReferences} />
+         
+          </div>
 
-                disabled={savedAnswers.isPending}
-                type="button"
-                onClick={() => {
-                  savedAnswers.mutate(
-                    {
-                      projectId: project!.id,
-                      question,
-                      answer,
-                      filesReferences,
+          <DialogFooter className="flex-shrink-0 flex gap-2 items-center justify-end mt-4">
+            <Button
+              disabled={savedAnswers.isPending}
+              type="button"
+              onClick={() => {
+                savedAnswers.mutate(
+                  {
+                    projectId: project!.id,
+                    question,
+                    answer,
+                    filesReferences,
+                  },
+                  {
+                    onSuccess: () => {
+                      toast.success("Answer Saved!");
+                      refetch();
                     },
-                    {
-                      onSuccess: () => {
-                        toast.success("Answer Saved!");
-                        refetch();
-                      },
-                      onError: () => {
-                        toast.error("Failed to save answer!");
-                      },
+                    onError: () => {
+                      toast.error("Failed to save answer!");
                     },
-                  );
-                }}
-              >
-             <Save className="size-4"/>   Save Answer
-              </Button>
-          <Button type="button" onClick={() => setOpen(false)}>
-            Close
-          </Button>
-        </div>
+                  },
+                );
+              }}
+            >
+              <Save className="size-4"/> Save Answer
+            </Button>
+            <Button type="button" onClick={() => setOpen(false)}>
+              Close
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
       <Card className="relative col-span-3">
