@@ -29,9 +29,6 @@ export const projectRouter = createTRPCRouter({
         data: {
           githubUrl: input.githubUrl,
           name: input.name,
-          createdBy: {
-            connect: { id: ctx.session.user.id },
-          },
           UserToProject: {
             create: {
               userId: ctx.session.user.id,

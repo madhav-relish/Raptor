@@ -100,6 +100,14 @@ const QnAPage = () => {
     return active && 'question' in active;
   };
 
+  if(!questions || questions.length == 0){
+    return (
+      <div>
+        All your saved questions for a project will be shown here!
+      </div>
+    )
+  }
+
   return (
     <>
       <AskQuestionCard />
