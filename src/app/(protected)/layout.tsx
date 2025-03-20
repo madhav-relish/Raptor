@@ -1,8 +1,10 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import React from "react";
 import { AppSidebar } from "./dashboard/app-sidebar";
-import { auth } from "@/server/auth";
+import { auth, signOut } from "@/server/auth";
 import { ModeToggle } from "@/components/theme-toggle";
+import SignOutButton from "@/components/signoutComponent";
+
 
 type SidebarLayoutProps = {
   children: React.ReactNode;
@@ -23,6 +25,7 @@ const SidebarLayout = async({ children }: SidebarLayoutProps) => {
           {/* <UserButton/> */}
           <div className="flex items-center gap-2">
             <ModeToggle/>
+            <SignOutButton/>
            <img className="h-10 w-10 mb-1 rounded-full bg-gray-400" src={`${session?.user.image}`} alt="user profile"/> 
             </div>
         </div>
