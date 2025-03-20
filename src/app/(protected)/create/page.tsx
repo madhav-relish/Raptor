@@ -1,12 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import useProject from "@/hooks/use-project";
 import useRefetch from "@/hooks/use-refetch";
 import { api } from "@/trpc/react";
 import { ArrowRight, Info, Loader2, Loader2Icon } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useLocalStorage } from "usehooks-ts";
 
 type FormInput = {
   repoUrl: string;
@@ -19,6 +21,29 @@ const CreatePage = () => {
   const { register, handleSubmit, reset } = useForm<FormInput>();
   const checkCredits = api.project.checkCredits.useMutation();
   const refetch = useRefetch();
+  const [loadingState, setLoadingState] = useState<string>("Starting...");
+  const { setProjectId } = useProject();
+
+  useEffect(() => {
+    if (createProject.isPending) {
+      const stages = [
+        { text: "Fetching files from GitHub...", delay: 8000 },
+        { text: "Analyzing repository structure...", delay: 8000 },
+        { text: "Extracting code context...", delay: 10000 },
+        { text: "Creating project vectors...", delay: 20000 },
+        { text: "Almost there...", delay: 40000 },
+      ];
+
+      stages.forEach(({ text, delay }) => {
+        const timer = setTimeout(() => {
+          setLoadingState(text);
+        }, delay);
+        return () => clearTimeout(timer);
+      });
+    } else {
+      setLoadingState("Starting...");
+    }
+  }, [createProject.isPending]);
 
   function onSubmit(data: FormInput) {
     if (!!checkCredits.data) {
@@ -29,10 +54,11 @@ const CreatePage = () => {
           githubToken: data.githubToken,
         },
         {
-          onSuccess: () => {
+          onSuccess: (project) => {
             toast.success("Project created successfully");
             refetch();
             reset();
+            setProjectId(project.id);
           },
           onError: () => {
             toast.error("Error while creating project");
@@ -105,30 +131,31 @@ const CreatePage = () => {
               <div className="h-4"></div>
 
               <Button
-  type="submit"
-  disabled={
-    createProject.isPending || 
-    checkCredits.isPending ||
-    (checkCredits.data && (!hasEnoughCredits || checkCredits.data.fileCount === 0))
-  }
->
-  {createProject.isPending ? (
-    <div className="flex items-center gap-2">
-      <Loader2Icon className="animate-spin" />
-      Creating Project...
-    </div>
-  ) : checkCredits.isPending ? (
-    <div className="flex items-center gap-2">
-      <Loader2Icon className="animate-spin" />
-      Checking Credits
-    </div>
-  ) : (
-    <div className="flex items-center gap-2">
-      {checkCredits.data ? "Create Project" : "Check Credits"}
-      <ArrowRight className="size-5" />
-    </div>
-  )}
-</Button>
+                type="submit"
+                disabled={
+                  createProject.isPending ||
+                  checkCredits.isPending ||
+                  (checkCredits.data &&
+                    (!hasEnoughCredits || checkCredits.data.fileCount === 0))
+                }
+              >
+                {createProject.isPending ? (
+                  <div className="flex items-center gap-2">
+                    <Loader2Icon className="animate-spin" />
+                    {loadingState}
+                  </div>
+                ) : checkCredits.isPending ? (
+                  <div className="flex items-center gap-2">
+                    <Loader2Icon className="animate-spin" />
+                    Checking Credits
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    {checkCredits.data ? "Create Project" : "Check Credits"}
+                    <ArrowRight className="size-5" />
+                  </div>
+                )}
+              </Button>
             </form>
           </div>
         </div>
