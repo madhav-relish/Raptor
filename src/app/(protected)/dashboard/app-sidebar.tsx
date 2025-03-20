@@ -76,7 +76,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <Link
                       href={item.url ?? "#"}
-                      className={`${pathname === item.url ? "bg-primary text-white" : ""}`}
+                      className={`${pathname === item.url ? "bg-primary text-primary-foreground" : ""}`}
                     >
                       <item.icon />
                       <span>{item.label}</span>
@@ -98,9 +98,9 @@ export function AppSidebar() {
                   <div onClick={()=>setProjectId(project.id)}>
                       <div
                         className={cn(
-                          "flex size-6 items-center justify-center rounded-sm border bg-white text-sm text-primary",
+                          "flex size-6 items-center justify-center rounded-sm border bg-primary-foreground text-sm text-primary",
                           {
-                            "bg-primary text-white": project.id === projectId,
+                            "bg-primary text-primary-foreground border border-red-400": project.id === projectId,
                           },
                         )}
                         // First charcter of the name

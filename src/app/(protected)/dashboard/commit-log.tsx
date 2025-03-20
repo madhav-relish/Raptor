@@ -30,14 +30,14 @@ const CommitLog = () => {
                     alt="author name"
                     className="relative mt-4 size-8 flex-none rounded-full bg-gray-50"
                   />
-                  <div className="flex-auto rounded-md bg-white p-3 ring-1 ring-inset ring-gray-200">
+                  <div className="flex-auto rounded-md bg-primary-foreground p-3 ring-1 ring-inset ring-gray-200">
                     <div className="flex justify-between gap-x-4">
                       <Link
                         target="_blank"
                         href={`${project?.githubUrl}/commits/${commit.commitHash}`}
                         className="py-0.5 text-sm leading-5"
                       >
-                        <span className="font-medium text-gray-800">
+                        <span className="font-medium text-gray-800 dark:text-white">
                           {commit.commitAuthorName}
                         </span>{" "}
                         <span className="inline-flex items-center">

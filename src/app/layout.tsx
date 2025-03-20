@@ -7,6 +7,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Raptor AI",
@@ -21,12 +22,19 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
         <TRPCReactProvider>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
           <Toaster richColors />
           <SessionProvider>
             <TooltipProvider>
             {children}
             </TooltipProvider>
             </SessionProvider>
+          </ThemeProvider>
         </TRPCReactProvider>
       </body>
     </html>

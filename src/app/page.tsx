@@ -18,9 +18,9 @@ export default async function Home() {
 
   return (
     <HydrateClient>
-      <div className="relative flex h-full w-full flex-col overflow-x-hidden bg-[#020817] text-white">
+      <div className="relative flex h-full w-full flex-col overflow-x-hidden bg-[#020817] text-primary-foreground">
         <BackgroundLines>
-          <div className="flex h-[100vh] w-[100vw] items-center justify-center bg-[#020817] text-3xl text-white">
+          <div className="flex h-[100vh] w-[100vw] items-center justify-center bg-[#020817] text-3xl text-primary-foreground">
              <div className="h-full w-full rounded-md flex md:items-center md:justify-center antialiased bg-grid-white/[0.02] relative overflow-hidden">
       <Spotlight />
       <div className=" p-4 max-w-7xl  mx-auto relative z-10  w-full pt-20 md:pt-0">
@@ -52,7 +52,7 @@ export default async function Home() {
         <ContainerScroll
           titleComponent={
             <>
-              <h1 className="text-4xl font-semibold dark:text-white">
+              <h1 className="text-4xl font-semibold dark:text-primary-foreground">
                 Unleash the power of <br />
                 <span className="mt-1 text-4xl font-bold leading-none md:text-[6rem]">
                   Code Contexts!

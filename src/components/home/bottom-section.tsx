@@ -32,7 +32,7 @@ const BottomSection = () => {
       </div>
 
       <div className="absolute bottom-4 w-full flex justify-center items-center">
-        {/* <p className="text-white">&copy; Raptor {currentYear}</p> */}
+        {/* <p className="text-primary-foreground">&copy; Raptor {currentYear}</p> */}
       </div>
     </div>
   );

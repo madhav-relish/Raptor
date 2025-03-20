@@ -54,35 +54,36 @@ const AskQuestionCard = () => {
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[90vw] h-[90vh] flex flex-col overflow-hidden">
+        <DialogContent className="flex h-[90vh] flex-col overflow-hidden sm:max-w-[90vw]">
           <DialogHeader className="flex-shrink-0">
             <div className="flex items-center gap-2">
               <DialogTitle>Raptor</DialogTitle>
             </div>
           </DialogHeader>
-          
-          <div className="flex-1 overflow-hidden flex flex-col gap-4">
-            <div className="flex-1 overflow-auto min-h-0">
+
+          <div className="flex flex-1 flex-col gap-4 overflow-hidden">
+            <div className="min-h-0 flex-1 overflow-auto">
               <MDEditor.Markdown
                 source={answer}
-                className="p-2 rounded"
+                className="rounded p-2"
                 // rehypePlugins={[[rehypeSanitize]]}
-                          components={{
-                            code: ({children, ...props}) => (
-                              <code {...props} className="!bg-neutral-100 dark:!bg-neutral-800 !text-primary">
-                                {children}
-                              </code>
-                            )
-                          }}
+                components={{
+                  code: ({ children, ...props }) => (
+                    <code
+                      {...props}
+                      className="!bg-neutral-100 !text-primary dark:!bg-neutral-800"
+                    >
+                      {children}
+                    </code>
+                  ),
+                }}
               />
             </div>
-            
-           
-              <CodeReferences filesReferences={filesReferences} />
-         
+
+            <CodeReferences filesReferences={filesReferences} />
           </div>
 
-          <DialogFooter className="flex-shrink-0 flex gap-2 items-center justify-end mt-4">
+          <DialogFooter className="mt-4 flex flex-shrink-0 items-center justify-end gap-2">
             <Button
               disabled={savedAnswers.isPending}
               type="button"
@@ -106,7 +107,7 @@ const AskQuestionCard = () => {
                 );
               }}
             >
-              <Save className="size-4"/> Save Answer
+              <Save className="size-4" /> Save Answer
             </Button>
             <Button type="button" onClick={() => setOpen(false)}>
               Close

@@ -2,6 +2,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import React from "react";
 import { AppSidebar } from "./dashboard/app-sidebar";
 import { auth } from "@/server/auth";
+import { ModeToggle } from "@/components/theme-toggle";
 
 type SidebarLayoutProps = {
   children: React.ReactNode;
@@ -20,8 +21,9 @@ const SidebarLayout = async({ children }: SidebarLayoutProps) => {
           {/* <SearchBar/> */}
           <div className="ml-auto"></div>
           {/* <UserButton/> */}
-          <div className="h-10 w-10 mb-1 rounded-full bg-gray-400">
-           <img className="rounded-full" src={`${session?.user.image}`} alt="user profile"/> 
+          <div className="flex items-center gap-2">
+            <ModeToggle/>
+           <img className="h-10 w-10 mb-1 rounded-full bg-gray-400" src={`${session?.user.image}`} alt="user profile"/> 
             </div>
         </div>
         <div className="h-4"></div>

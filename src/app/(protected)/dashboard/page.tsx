@@ -33,14 +33,14 @@ const DashboardPage = () => {
       <div className="flex flex-wrap items-center justify-between gap-y-4">
         <div className="w-fit rounded-md bg-primary px-4 py-3">
           <div className="flex items-center">
-            <GithubIcon className="size-5 text-white" />
+            <GithubIcon className="size-5 text-primary-foreground" />
             <div className="ml-2">
-              <p className="text-sm font-medium text-white">
+              <p className="text-sm font-medium text-primary-foreground">
                 This project is linked to{" "}
                 <Link
                   href={project?.githubUrl ?? " "}
                   target="_blank"
-                  className="inline-flex items-center text-white/80 hover:underline"
+                  className="inline-flex items-center text-primary-foreground/80 hover:underline"
                 >
                   
                   {project?.githubUrl}

@@ -10,7 +10,7 @@ export function TabsDemo() {
       title: "Smart Q&A",
       value: "qna",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-primary-foreground bg-gradient-to-br from-purple-700 to-violet-900">
           <p>Saved Answers on the Go or Ask again!</p>
           <Image
       src="/qna.png"
@@ -26,7 +26,7 @@ export function TabsDemo() {
       title: "Code Context",
       value: "code_context",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-primary-foreground bg-gradient-to-br from-purple-700 to-violet-900">
           <p>Raptor Understands the context of you codebase!</p>
           <Image
       src="/aichat.png"
@@ -42,7 +42,7 @@ export function TabsDemo() {
       title: "Team Collaboration",
       value: "team_collaboration",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-primary-foreground bg-gradient-to-br from-purple-700 to-violet-900">
           <p>Invite Junior Devs to get them started straight away!</p>
           <Image
       src="/Invite.png"
@@ -58,7 +58,7 @@ export function TabsDemo() {
       title: "Commit History",
       value: "commit_history",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-primary-foreground bg-gradient-to-br from-purple-700 to-violet-900">
           <p>Smart Commit Summary for Quicker Evaluation</p>
           <Image
       src="/commits.png"
