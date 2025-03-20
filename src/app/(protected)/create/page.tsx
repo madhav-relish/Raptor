@@ -15,6 +15,7 @@ type FormInput = {
 };
 
 const CreatePage = () => {
+
   const createProject = api.project.createProject.useMutation();
   const { register, handleSubmit, reset } = useForm<FormInput>();
  const checkCredits = api.project.checkCredits.useMutation()
@@ -52,7 +53,7 @@ const CreatePage = () => {
 
   return (
     <div className="flex h-full items-center justify-center gap-12">
-      <img src="/undraw_github.svg" alt="github" className="h-56 w-auto" />
+      {/* <img src="/undraw_github.svg" alt="github" className="h-56 w-auto" /> */}
       <div>
         <div>
           <h1>Link your github repository</h1>
