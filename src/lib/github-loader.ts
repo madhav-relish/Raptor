@@ -51,18 +51,30 @@ export const checkCredits = async (githubUrl: string, githubToken?: string)=>{
 }
 
 export const loadGithubRepo = async (githubUrl: string, githubToken?: string) => {
+    const octoKit = new Octokit({auth: githubToken || process.env.GITHUB_TOKEN});
+    const [owner, repo] = githubUrl.split('/').slice(-2);
+    
+    const { data: repoData } = await octoKit.rest.repos.get({
+        owner: owner || "",
+        repo: repo || "",
+    });
+    
+    const defaultBranch = repoData.default_branch;
+
+    //TODO:: Allow user to select the branch they want to analyze
     const loader = new GithubRepoLoader(githubUrl,
         {
             accessToken: githubToken || process.env.GITHUB_TOKEN,
-            branch: 'main',
+            branch: defaultBranch, 
             ignoreFiles: ['package-lock.json', 'yarn.lock', 'pnpm-lock.yml', 'bun.lockb'],
             recursive: true,
             unknown: 'warn',
             maxConcurrency: 5
         }
-    )
-    const docs = await loader.load()
-    return docs
+    );
+    
+    const docs = await loader.load();
+    return docs;
 }
 
 export const indexGithubRepo = async (projectId: string, githubUrl: string, githubToken?: string)=>{
