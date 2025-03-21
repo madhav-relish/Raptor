@@ -5,7 +5,7 @@ const BottomSection = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="py-36 flex flex-col items-center relative h-screen bg-transpaent">
+    <div className="py-36 flex flex-col items-center relative h-screen bg-transpaent text-white">
       <div className="w-full absolute inset-0 h-full">
         <SparklesCore
           id="tsparticlesfullpage"

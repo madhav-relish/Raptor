@@ -27,11 +27,11 @@ export default async function Home() {
         <h1 className="text-4xl md:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
         AI-Powered Code Intelligence
         </h1>
-        <h3 className="text-4xl mx-auto pt-4 text-center">Your Project's Knowledge Base, Powered by AI</h3>
+        <h3 className="text-4xl mx-auto pt-4 text-center text-white">Your Project's Knowledge Base, Powered by AI</h3>
         <p className="mt-4 font-normal text-xl text-neutral-300 max-w-lg text-center mx-auto">
         Ask questions about your codebase, get instant answers, and make development collaboration smarter.
         </p>
-        <div className="w-full flex items-center justify-center mt-8">
+        <div className="w-full flex items-center justify-center mt-8 ">
         <MagicButton/>
         </div>
       </div>
@@ -52,7 +52,7 @@ export default async function Home() {
         <ContainerScroll
           titleComponent={
             <>
-              <h1 className="text-4xl font-semibold dark:text-primary-foreground">
+              <h1 className="text-4xl font-semibold dark:text-white">
                 Unleash the power of <br />
                 <span className="mt-1 text-4xl font-bold leading-none md:text-[6rem]">
                   Code Contexts!
