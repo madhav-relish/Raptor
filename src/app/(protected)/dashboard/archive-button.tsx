@@ -1,12 +1,11 @@
 import { Button } from '@/components/ui/button'
-import useProject from '@/hooks/use-project'
 import useRefetch from '@/hooks/use-refetch'
 import { api } from '@/trpc/react'
+import { Trash } from 'lucide-react'
 import React from 'react'
 import { toast } from 'sonner'
 
-const ArchiveButton = () => {
-    const {projectId, setProjectId} = useProject()
+const ArchiveButton = ({icon, projectId} : {icon?: boolean, projectId: string}) => {
 
     const archiveProject = api.project.archiveProject.useMutation()
     const refetch = useRefetch()
@@ -17,12 +16,12 @@ const ArchiveButton = () => {
         onSuccess: ()=>{
             toast.success("Project Archived!")
             refetch()
-            setProjectId("")
+            // setProjectId("")
         }, onError: ()=>{
             toast.error("Unable to archive project")
         }
       })
-    }}>Archive</Button>
+    }}>{icon ? <Trash /> : "Archive"}</Button>
   )
 }
 

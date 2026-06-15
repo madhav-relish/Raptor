@@ -23,9 +23,11 @@ import {
   Plus,
   Presentation,
   RocketIcon,
+  Trash as DeleteIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ArchiveButton from "./archive-button";
 
 const items: Array<{
   icon: LucideIcon;
@@ -96,6 +98,7 @@ export function AppSidebar() {
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
                   <div onClick={()=>setProjectId(project.id)}>
+                    <div className="flex items-center justify-between gap-2 group">
                       <div
                         className={cn(
                           "flex size-6 items-center justify-center rounded-sm border bg-primary-foreground text-sm text-primary",
@@ -108,6 +111,10 @@ export function AppSidebar() {
                         {project.name[0]}
                       </div>
                       <span> {project.name}</span>
+                      <span className="invisible group-hover:visible">
+                      <ArchiveButton icon projectId={projectId}/>
+                      </span>
+                      </div>
                     </div>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

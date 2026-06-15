@@ -55,7 +55,7 @@ const DashboardPage = () => {
         <div className="flex items-center gap-4">
           <TeamMembers/>
           <InviteButton/>
-          <ArchiveButton />
+          <ArchiveButton projectId={projectId}/>
         </div>
       </div>
       <div className="mt-4">
