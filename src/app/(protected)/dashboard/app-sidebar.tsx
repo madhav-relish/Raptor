@@ -34,39 +34,39 @@ const items: Array<{
   label: string;
   url: string;
 }> = [
-  {
-    label: "Dashboard",
-    icon: Home,
-    url: "/dashboard",
-  },
-  {
-    label: "Q&A",
-    icon: Bot,
-    url: "/qna",
-  },
-  {
-    label: "Meetings",
-    icon: Presentation,
-    url: "meetings",
-  },
-  {
-    label: "Billing",
-    icon: CreditCard,
-    url: "/billing",
-  },
-];
+    {
+      label: "Dashboard",
+      icon: Home,
+      url: "/dashboard",
+    },
+    {
+      label: "Q&A",
+      icon: Bot,
+      url: "/qna",
+    },
+    {
+      label: "Meetings",
+      icon: Presentation,
+      url: "meetings",
+    },
+    {
+      label: "Billing",
+      icon: CreditCard,
+      url: "/billing",
+    },
+  ];
 export function AppSidebar() {
   const pathname = usePathname();
   const { open } = useSidebar();
-  const {projects, projectId, setProjectId} = useProject()
+  const { projects, projectId, setProjectId } = useProject()
   return (
     <Sidebar collapsible="icon">
-<SidebarHeader className="font-bold text-4xl flex flex-row items-center gap-2">
-  <RocketIcon className="w-8 h-8 text-black" /> 
-  <span className="bg-gradient-to-r from-gray-300 to-black text-transparent bg-clip-text">
-    {open ? "Raptor.ai" : "R"}
-  </span>
-</SidebarHeader>
+      <SidebarHeader className="font-bold text-4xl flex flex-row items-center gap-2">
+        <RocketIcon className="w-8 h-8 text-black" />
+        <span className="bg-gradient-to-r from-gray-300 to-black text-transparent bg-clip-text">
+          {open ? "Raptor.ai" : "R"}
+        </span>
+      </SidebarHeader>
 
       <SidebarContent>
         <SidebarGroup>
@@ -93,37 +93,37 @@ export function AppSidebar() {
           <SidebarGroupLabel>Your Projects</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-             {projects?.map(project => {
-              return(
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                  <div onClick={()=>setProjectId(project.id)}>
-                    <div className="flex items-center justify-between gap-2 group">
-                      <div
-                        className={cn(
-                          "flex size-6 items-center justify-center rounded-sm border bg-primary-foreground text-sm text-primary",
-                          {
-                            "bg-primary text-primary-foreground border border-red-400": project.id === projectId,
-                          },
-                        )}
-                        // First charcter of the name
-                      >
-                        {project.name[0]}
+              {projects?.map(project => {
+                return (
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <div onClick={() => setProjectId(project.id)}>
+                        <div className="flex items-center justify-end gap-2 group">
+                          <div
+                            className={cn(
+                              "flex size-6 items-center justify-center rounded-sm border bg-primary-foreground text-sm text-primary",
+                              {
+                                "bg-primary text-primary-foreground border border-red-400": project.id === projectId,
+                              },
+                            )}
+                          // First charcter of the name
+                          >
+                            {project.name[0]}
+                          </div>
+                          <span> {project.name}</span>
+                          <span className={cn("invisible", {"group-hover:visible": project.id ===  projectId})}>
+                            <ArchiveButton icon projectId={project.id} />
+                          </span>
+                        </div>
                       </div>
-                      <span> {project.name}</span>
-                      <span className="invisible group-hover:visible">
-                      <ArchiveButton icon projectId={projectId}/>
-                      </span>
-                      </div>
-                    </div>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              )
-             })}
-             
-             
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
+
+
               <div className="h-2"></div>
-            {open &&  <SidebarMenuItem>
+              {open && <SidebarMenuItem>
                 <Link href={"/create"}>
                   <Button variant={"outline"} className="w-full">
                     <Plus />
