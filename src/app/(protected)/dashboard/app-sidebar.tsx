@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -59,6 +60,7 @@ export function AppSidebar() {
   const pathname = usePathname();
   const { open } = useSidebar();
   const { projects, projectId, setProjectId } = useProject()
+  const [hoveredProjectId, setHoveredProjectId] = useState<string | null>(null);
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="font-bold text-4xl flex flex-row items-center gap-2">
@@ -93,36 +95,44 @@ export function AppSidebar() {
           <SidebarGroupLabel>Your Projects</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {projects?.map(project => {
+              {projects?.map((project) => {
                 return (
-                  <SidebarMenuItem key={project.id}>
+                  <SidebarMenuItem
+                    key={project.id}
+                    onMouseEnter={() => setHoveredProjectId(project.id)}
+                    onMouseLeave={() => setHoveredProjectId(null)}
+                  >
                     <SidebarMenuButton asChild>
                       <div onClick={() => setProjectId(project.id)}>
-                        <div className="flex items-center justify-end gap-2 group">
+                        <div className="relative flex items-center gap-2 w-full">
                           <div
                             className={cn(
                               "flex size-6 items-center justify-center rounded-sm border bg-primary-foreground text-sm text-primary",
                               {
                                 "bg-primary text-primary-foreground border border-red-400": project.id === projectId,
-                              },
+                              }
                             )}
                           >
                             {project.name[0]}
                           </div>
-                          <span> {project.name}</span>
-                          <span className={cn(
-                            "invisible opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100",
-                            {
-                              "visible opacity-100": project.id === projectId,
-                            },
-                          )}>
+                          <span className="ml-2 truncate">{project.name}</span>
+
+                          <div
+                            className={cn(
+                              "absolute right-2 transition-opacity duration-150",
+                              {
+                                "opacity-100 pointer-events-auto": hoveredProjectId === project.id || project.id === projectId,
+                                "opacity-0 pointer-events-none": hoveredProjectId !== project.id && project.id !== projectId,
+                              }
+                            )}
+                          >
                             <ArchiveButton icon projectId={project.id} />
-                          </span>
+                          </div>
                         </div>
                       </div>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                )
+                );
               })}
 
 

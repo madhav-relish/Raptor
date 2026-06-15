@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { signIn, useSession } from "next-auth/react";
@@ -12,7 +12,15 @@ const SigninComponent = () => {
   const session = useSession()
   const router = useRouter()
 
-  if(session && session.status==="authenticated"){return router.push('/dashboard')}
+  useEffect(() => {
+    if (session && session.status === "authenticated") {
+      router.push('/dashboard');
+    }
+  }, [session, router]);
+
+  if (session && session.status === "authenticated") {
+    return <div>Redirecting...</div>;
+  }
 
   return (
     <Card>
