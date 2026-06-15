@@ -39,7 +39,7 @@ export async function summariseCode(doc: Document) {
 
 export async function generativeEmbedding(summary: string) {
     const model = genAI.getGenerativeModel({
-        model: 'gemini-embedding-2'
+        model: 'gemini-embedding-2-preview'
     })
     const result = await model.embedContent(summary)
     const embedding = result.embedding
