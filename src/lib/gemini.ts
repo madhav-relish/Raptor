@@ -3,7 +3,7 @@ import { commitSummaryPrompt } from './constants'
 import { Document } from '@langchain/core/documents';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
 
 export const aiSummariesCommit = async (diff: string) => {
