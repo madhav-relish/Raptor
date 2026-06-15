@@ -5,13 +5,11 @@ import { useRouter } from "next/navigation";
 
 const SignOutButton = () => {
   const router = useRouter()
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
     try {
-      signOut();
-      router.push("/");
+      await signOut({ callbackUrl: "/" });
     } catch (error) {
       console.error("Error signing out:", error);
-
     }
   }
   return (

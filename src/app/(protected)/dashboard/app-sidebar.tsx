@@ -95,7 +95,7 @@ export function AppSidebar() {
             <SidebarMenu>
               {projects?.map(project => {
                 return (
-                  <SidebarMenuItem>
+                  <SidebarMenuItem key={project.id}>
                     <SidebarMenuButton asChild>
                       <div onClick={() => setProjectId(project.id)}>
                         <div className="flex items-center justify-end gap-2 group">
@@ -106,12 +106,16 @@ export function AppSidebar() {
                                 "bg-primary text-primary-foreground border border-red-400": project.id === projectId,
                               },
                             )}
-                          // First charcter of the name
                           >
                             {project.name[0]}
                           </div>
                           <span> {project.name}</span>
-                          <span className={cn("invisible", {"group-hover:visible": project.id ===  projectId})}>
+                          <span className={cn(
+                            "invisible opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100",
+                            {
+                              "visible opacity-100": project.id === projectId,
+                            },
+                          )}>
                             <ArchiveButton icon projectId={project.id} />
                           </span>
                         </div>
