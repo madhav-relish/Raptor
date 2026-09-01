@@ -3,9 +3,15 @@ import { Octokit } from 'octokit';
 import axios from 'axios'
 import { aiSummariesCommit } from './gemini';
 
-export const octokit = new Octokit({
-   auth: process.env.GITHUB_TOKEN
-})
+const getOctokit = () => {
+   const token = process.env.GITHUB_TOKEN;
+   if (token && token.trim() !== "") {
+      return new Octokit({ auth: token });
+   }
+   return new Octokit();
+};
+
+export const octokit = getOctokit();
 
 type Response = {
    commitHash: string;
@@ -20,10 +26,26 @@ export const getCommitHashes = async (githubUrl: string): Promise<Response[]> =>
    if(!owner || !repo){
       throw new Error("Invalid github url")
    }
-   const { data } = await octokit.rest.repos.listCommits({
-      owner,
-      repo
-   })
+   let client = getOctokit();
+   let data;
+   try {
+      const res = await client.rest.repos.listCommits({
+         owner,
+         repo
+      });
+      data = res.data;
+   } catch (error: any) {
+      if (error?.status === 401 || error?.message?.includes('Bad credentials')) {
+         client = new Octokit();
+         const res = await client.rest.repos.listCommits({
+            owner,
+            repo
+         });
+         data = res.data;
+      } else {
+         throw error;
+      }
+   }
    const sortedCommits = data.sort((a: any, b: any) => new Date(b.commit.author.date).getTime() - new Date(a.commit.author.date).getTime()) as any[]
    return sortedCommits.slice(0, 10).map((commit: any) => ({
       commitHash: commit.sha as string,
@@ -38,15 +60,28 @@ export const pollCommits = async (projectId: string) => {
    const { project, githubUrl } = await fetchProjectGithubUrl(projectId)
    const commitHashes = await getCommitHashes(githubUrl)
    const unprocessedCommits = await filterUnprocessedCommits(projectId, commitHashes)
-   const summaryResponse = await Promise.allSettled(unprocessedCommits.map((commit)=>{
-      return summariseCommit(githubUrl, commit.commitHash)
-   }))
-   const summaries = summaryResponse.map((response)=>{
-      if(response.status === 'fulfilled'){
-         return typeof response.value === 'string' ? response.value : ""
+
+   const summaries: string[] = [];
+   const BATCH_SIZE = 2;
+
+   for (let i = 0; i < unprocessedCommits.length; i += BATCH_SIZE) {
+      const batch = unprocessedCommits.slice(i, i + BATCH_SIZE);
+      const batchResponses = await Promise.allSettled(batch.map((commit) => {
+         return summariseCommit(githubUrl, commit.commitHash);
+      }));
+
+      for (const response of batchResponses) {
+         if (response.status === 'fulfilled') {
+            summaries.push(typeof response.value === 'string' ? response.value : "");
+         } else {
+            summaries.push("");
+         }
       }
-      return ""
-   })
+
+      if (i + BATCH_SIZE < unprocessedCommits.length) {
+         await new Promise((res) => setTimeout(res, 500));
+      }
+   }
 
    const commits = await db.commit.createMany({
       data: summaries.map((summary, index) =>{
@@ -63,7 +98,6 @@ export const pollCommits = async (projectId: string) => {
       })
    })
    return commits
-   // return console.log(summaries)
 }
 
 export const fetchProjectGithubUrl = async (projectId: string) => {

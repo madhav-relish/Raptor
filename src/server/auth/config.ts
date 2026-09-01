@@ -19,11 +19,28 @@ declare module "next-auth" {
       // role: UserRole;
     } & DefaultSession["user"];
   }
+}
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+const providers = [];
+
+if (process.env.GITHUB_ID && process.env.GITHUB_SECRET) {
+  providers.push(
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+      issuer: "https://github.com/login/oauth",
+      checks: ["state"],
+    })
+  );
+}
+
+if (process.env.AUTH_DISCORD_ID && process.env.AUTH_DISCORD_SECRET) {
+  providers.push(
+    DiscordProvider({
+      clientId: process.env.AUTH_DISCORD_ID,
+      clientSecret: process.env.AUTH_DISCORD_SECRET,
+    })
+  );
 }
 
 /**
@@ -32,22 +49,9 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authConfig = {
-  providers: [
-    DiscordProvider,
-    /**
-     * ...add more providers here.
-     *
-     * Most other providers require a bit more work than the Discord provider. For example, the
-     * GitHub provider requires you to add the `refresh_token_expires_in` field to the Account
-     * model. Refer to the NextAuth.js docs for the provider you want to use. Example:
-     *
-     * @see https://next-auth.js.org/providers/github
-     */
-    GitHubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET
-    })
-  ],
+  secret: process.env.AUTH_SECRET,
+  trustHost: true,
+  providers,
   adapter: PrismaAdapter(db),
   callbacks: {
     session: ({ session, user }) => ({

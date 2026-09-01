@@ -15,6 +15,8 @@ export const env = createEnv({
     AUTH_DISCORD_SECRET: z.string().optional(),
     DATABASE_URL: z.string().url(),
     GEMINI_API_KEY: z.string().optional(),
+    OPENROUTER_API_KEY: z.string().optional(),
+    OPENROUTER_MODEL: z.string().optional().default("openrouter/auto"),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -39,6 +41,8 @@ export const env = createEnv({
     AUTH_DISCORD_SECRET: process.env.AUTH_DISCORD_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
     GEMINI_API_KEY: process.env.GEMINI_API_KEY,
+    OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY,
+    OPENROUTER_MODEL: process.env.OPENROUTER_MODEL,
     NODE_ENV: process.env.NODE_ENV,
   },
   /**

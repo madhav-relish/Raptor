@@ -10,7 +10,7 @@
     "db:migrate": "prisma migrate deploy",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "postinstall": "prisma generate",
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^1.1.25",
+    "@ai-sdk/openai": "^1.1.9",
     "@auth/prisma-adapter": "^2.7.2",
     "@google/generative-ai": "^0.24.0",
     "@hookform/resolvers": "^4.1.3",

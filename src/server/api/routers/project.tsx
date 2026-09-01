@@ -36,9 +36,19 @@ export const projectRouter = createTRPCRouter({
           },
         },
       });
-      await indexGithubRepo(project.id, input.githubUrl, input.githubToken);
-      await pollCommits(project.id);
-      await ctx.db.user.update({where: {id: ctx.session.user.id}, data: { credits: {decrement: fileCount}}})
+
+      try {
+        await indexGithubRepo(project.id, input.githubUrl, input.githubToken);
+        await pollCommits(project.id);
+        await ctx.db.user.update({where: {id: ctx.session.user.id}, data: { credits: {decrement: fileCount}}})
+      } catch (error) {
+        console.error("Error during project indexing or setup:", error);
+        await ctx.db.sourceCodeEmbedding.deleteMany({ where: { projectId: project.id } }).catch(() => {});
+        await ctx.db.commit.deleteMany({ where: { projectId: project.id } }).catch(() => {});
+        await ctx.db.userToProject.deleteMany({ where: { projectId: project.id } }).catch(() => {});
+        await ctx.db.project.delete({ where: { id: project.id } }).catch(() => {});
+        throw error;
+      }
       return project;
     }),
   getAllProjects: protectedProcedure.query(async ({ ctx }) => {
@@ -132,5 +142,16 @@ export const projectRouter = createTRPCRouter({
       const fileCount = await checkCredits(input.githubUrl, input.githubToken)
       const userCredits = await ctx.db.user.findUnique({where: {id: ctx.session.user.id!}, select:{credits: true}})
       return { fileCount, userCredits: userCredits?.credits || 0 }
+    }),
+    reindexProject: protectedProcedure.input(z.object({
+      projectId: z.string(),
+      githubToken: z.string().optional()
+    })).mutation(async ({ctx, input})=>{
+      const project = await ctx.db.project.findUnique({ where: { id: input.projectId } })
+      if (!project) throw new Error("Project not found")
+      // Clear existing source code embeddings for clean re-indexing
+      await ctx.db.sourceCodeEmbedding.deleteMany({ where: { projectId: input.projectId } })
+      await indexGithubRepo(project.id, project.githubUrl, input.githubToken)
+      return { success: true }
     })
 });

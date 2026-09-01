@@ -2,16 +2,9 @@
 
 import { streamText } from 'ai'
 import { createStreamableValue } from 'ai/rsc'
-import { createGoogleGenerativeAI } from '@ai-sdk/google'
+import { getAIModel } from '@/lib/ai-provider'
 import { generativeEmbedding } from '@/lib/gemini'
 import { db } from '@/server/db'
-
-
-
-const google = createGoogleGenerativeAI({
-    apiKey: process.env.GEMINI_API_KEY
-})
-
 
 export async function askQuestion(question: string, projectId: string) {
     const stream = createStreamableValue()
@@ -37,7 +30,7 @@ export async function askQuestion(question: string, projectId: string) {
 
     (async () => {
         const { textStream } = await streamText({
-            model: google('gemini-1.5-flash'),
+            model: getAIModel() as any,
             prompt: `
         You are an AI code assistant who answers questions about the codebase. Your target audience is a technical intern.
 
