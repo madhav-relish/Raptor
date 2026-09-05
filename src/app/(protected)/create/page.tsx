@@ -55,7 +55,7 @@ const CreatePage = () => {
         },
         {
           onSuccess: (project) => {
-            toast.success("Project created successfully");
+            toast.success("Project created! Codebase indexing is running in the background...");
             refetch();
             reset();
             setProjectId(project.id);

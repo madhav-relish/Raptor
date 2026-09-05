@@ -17,7 +17,7 @@ import CodeReferences from "./code-references";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
 import useRefetch from "@/hooks/use-refetch";
-import { Save } from "lucide-react";
+import { Loader2, Save } from "lucide-react";
 import rehypeSanitize from "rehype-sanitize";
 
 const AskQuestionCard = () => {
@@ -30,6 +30,14 @@ const AskQuestionCard = () => {
   >([]);
   const [answer, setAnswer] = useState("");
   const savedAnswers = api.project.savedAnswer.useMutation();
+
+  const indexingStatus = api.project.getIndexingStatus.useQuery(
+    { projectId: project?.id ?? "" },
+    {
+      enabled: !!project?.id,
+      refetchInterval: (query) => (query.state.data?.isIndexed ? false : 3000),
+    }
+  );
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setAnswer("");
@@ -120,11 +128,19 @@ const AskQuestionCard = () => {
           <CardTitle>Ask a question</CardTitle>
         </CardHeader>
         <CardContent>
+          {indexingStatus.data && !indexingStatus.data.isIndexed && (
+            <div className="mb-3 flex items-center gap-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-300">
+              <Loader2 className="size-3.5 animate-spin text-amber-600 dark:text-amber-400" />
+              <span>
+                Codebase is indexing in the background... AI answers will be available as code vectors finish processing.
+              </span>
+            </div>
+          )}
           <form onSubmit={onSubmit}>
             <Textarea
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
-              className="which file should I wdit to change the home page?"
+              placeholder="Which file should I edit to change the home page?"
             />
             <div className="h-4"></div>
             <Button type="submit" disabled={loading}>

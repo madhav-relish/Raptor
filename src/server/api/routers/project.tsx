@@ -164,5 +164,16 @@ export const projectRouter = createTRPCRouter({
       })()
 
       return { success: true }
-    })
+    }),
+    getIndexingStatus: protectedProcedure
+      .input(z.object({ projectId: z.string() }))
+      .query(async ({ ctx, input }) => {
+        const count = await ctx.db.sourceCodeEmbedding.count({
+          where: { projectId: input.projectId },
+        });
+        return {
+          isIndexed: count > 0,
+          embeddingCount: count,
+        };
+      })
 });
