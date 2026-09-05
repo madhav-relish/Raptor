@@ -30,9 +30,12 @@ Give a summary no more than 100 words of the code above.`;
 export async function generativeEmbedding(summary: string) {
   return withRetry(async () => {
     const model = genAI.getGenerativeModel({
-      model: 'text-embedding-004',
+      model: 'gemini-embedding-001',
     });
-    const result = await model.embedContent(summary);
+    const result = await model.embedContent({
+      content: { role: 'user', parts: [{ text: summary }] },
+      outputDimensionality: 768,
+    } as any);
     const embedding = result.embedding;
     return embedding.values;
   });
