@@ -35,7 +35,7 @@ const AskQuestionCard = () => {
     { projectId: project?.id ?? "" },
     {
       enabled: !!project?.id,
-      refetchInterval: (query) => (query.state.data?.isIndexed ? false : 3000),
+      refetchInterval: (query) => (query.state.data?.isIndexed ? false : 15000),
     }
   );
 
