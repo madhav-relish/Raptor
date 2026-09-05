@@ -182,7 +182,7 @@ export const indexGithubRepo = async (projectId: string, githubUrl: string, gith
 
 const generateEmbeddings = async (docs: Document[]) => {
     const results = []
-    const BATCH_SIZE = 2
+    const BATCH_SIZE = 5
 
     for (let i = 0; i < docs.length; i += BATCH_SIZE) {
         const batch = docs.slice(i, i + BATCH_SIZE)
@@ -202,7 +202,7 @@ const generateEmbeddings = async (docs: Document[]) => {
         results.push(...batchResults)
 
         if (i + BATCH_SIZE < docs.length) {
-            await new Promise((res) => setTimeout(res, 500))
+            await new Promise((res) => setTimeout(res, 100))
         }
     }
 

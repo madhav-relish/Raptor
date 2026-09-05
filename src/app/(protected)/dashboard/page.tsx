@@ -12,6 +12,8 @@ import TeamMembers from "./team-members";
 import dynamic from "next/dynamic";
 const InviteButton = dynamic(()=>import('./invite-button'), {ssr: false})
 
+import ReindexButton from "./reindex-button";
+
 const DashboardPage = () => {
   const { data: session } = useSession();
   const { project, projectId } = useProject();
@@ -55,6 +57,7 @@ const DashboardPage = () => {
         <div className="flex items-center gap-4">
           <TeamMembers/>
           <InviteButton/>
+          <ReindexButton />
           <ArchiveButton projectId={projectId}/>
         </div>
       </div>

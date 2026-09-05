@@ -62,7 +62,7 @@ export const pollCommits = async (projectId: string) => {
    const unprocessedCommits = await filterUnprocessedCommits(projectId, commitHashes)
 
    const summaries: string[] = [];
-   const BATCH_SIZE = 2;
+   const BATCH_SIZE = 5;
 
    for (let i = 0; i < unprocessedCommits.length; i += BATCH_SIZE) {
       const batch = unprocessedCommits.slice(i, i + BATCH_SIZE);
@@ -79,7 +79,7 @@ export const pollCommits = async (projectId: string) => {
       }
 
       if (i + BATCH_SIZE < unprocessedCommits.length) {
-         await new Promise((res) => setTimeout(res, 500));
+         await new Promise((res) => setTimeout(res, 100));
       }
    }
 
