@@ -29,45 +29,10 @@ Give a summary no more than 100 words of the code above.`;
 
 export async function generativeEmbedding(summary: string) {
   return withRetry(async () => {
-    const openrouterKey = process.env.OPENROUTER_API_KEY;
-
-    if (openrouterKey && openrouterKey.trim() !== '') {
-      try {
-        const res = await fetch('https://openrouter.ai/api/v1/embeddings', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${openrouterKey}`,
-            'Content-Type': 'application/json',
-            'HTTP-Referer': 'https://github.com/madhav-relish/Raptor',
-            'X-Title': 'Raptor',
-          },
-          body: JSON.stringify({
-            model: 'openai/text-embedding-3-small',
-            input: summary,
-            dimensions: 768,
-          }),
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          if (data.data && data.data[0] && data.data[0].embedding) {
-            return data.data[0].embedding;
-          }
-        } else {
-          console.warn('[OpenRouter Embedding] Request returned status', res.status);
-        }
-      } catch (err: any) {
-        console.warn('[OpenRouter Embedding] Failed, falling back to Gemini:', err?.message || err);
-      }
-    }
-
     const model = genAI.getGenerativeModel({
-      model: 'gemini-embedding-2-preview',
+      model: 'text-embedding-004',
     });
-    const result = await model.embedContent({
-      content: { role: 'user', parts: [{ text: summary }] },
-      outputDimensionality: 768,
-    } as any);
+    const result = await model.embedContent(summary);
     const embedding = result.embedding;
     return embedding.values;
   });
