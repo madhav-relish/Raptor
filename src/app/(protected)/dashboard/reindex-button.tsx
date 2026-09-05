@@ -24,7 +24,7 @@ const ReindexButton = () => {
       { projectId },
       {
         onSuccess: () => {
-          toast.success("Project codebase re-indexed successfully!");
+          toast.success("Re-indexing started in background!");
           refetch();
         },
         onError: (err) => {

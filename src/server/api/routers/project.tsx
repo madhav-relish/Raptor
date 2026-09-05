@@ -37,18 +37,21 @@ export const projectRouter = createTRPCRouter({
         },
       });
 
-      try {
-        await indexGithubRepo(project.id, input.githubUrl, input.githubToken);
-        await pollCommits(project.id);
-        await ctx.db.user.update({where: {id: ctx.session.user.id}, data: { credits: {decrement: fileCount}}})
-      } catch (error) {
-        console.error("Error during project indexing or setup:", error);
-        await ctx.db.sourceCodeEmbedding.deleteMany({ where: { projectId: project.id } }).catch(() => {});
-        await ctx.db.commit.deleteMany({ where: { projectId: project.id } }).catch(() => {});
-        await ctx.db.userToProject.deleteMany({ where: { projectId: project.id } }).catch(() => {});
-        await ctx.db.project.delete({ where: { id: project.id } }).catch(() => {});
-        throw error;
-      }
+      await ctx.db.user.update({
+        where: { id: ctx.session.user.id },
+        data: { credits: { decrement: fileCount } },
+      });
+
+      // Run indexing in background non-blockingly so client gets instant HTTP response without 60s Vercel timeout
+      void (async () => {
+        try {
+          await indexGithubRepo(project.id, input.githubUrl, input.githubToken);
+          await pollCommits(project.id);
+        } catch (error) {
+          console.error("Background indexing error for project:", project.id, error);
+        }
+      })();
+
       return project;
     }),
   getAllProjects: protectedProcedure.query(async ({ ctx }) => {
@@ -151,7 +154,15 @@ export const projectRouter = createTRPCRouter({
       if (!project) throw new Error("Project not found")
       // Clear existing source code embeddings for clean re-indexing
       await ctx.db.sourceCodeEmbedding.deleteMany({ where: { projectId: input.projectId } })
-      await indexGithubRepo(project.id, project.githubUrl, input.githubToken)
+      
+      void (async () => {
+        try {
+          await indexGithubRepo(project.id, project.githubUrl, input.githubToken)
+        } catch (e) {
+          console.error("Background reindexing error:", e)
+        }
+      })()
+
       return { success: true }
     })
 });

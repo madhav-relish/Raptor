@@ -65,8 +65,8 @@ export const checkCredits = async (githubUrl: string, githubToken?: string) => {
         if (treeRes.data && Array.isArray(treeRes.data.tree)) {
             const files = treeRes.data.tree.filter(
                 item => item.type === 'blob' &&
-                !item.path?.includes('lock') &&
-                !item.path?.startsWith('.git/')
+                    !item.path?.includes('lock') &&
+                    !item.path?.startsWith('.git/')
             );
             return files.length;
         }
@@ -84,8 +84,8 @@ export const checkCredits = async (githubUrl: string, githubToken?: string) => {
                 if (treeRes.data && Array.isArray(treeRes.data.tree)) {
                     const files = treeRes.data.tree.filter(
                         item => item.type === 'blob' &&
-                        !item.path?.includes('lock') &&
-                        !item.path?.startsWith('.git/')
+                            !item.path?.includes('lock') &&
+                            !item.path?.startsWith('.git/')
                     );
                     return files.length;
                 }
